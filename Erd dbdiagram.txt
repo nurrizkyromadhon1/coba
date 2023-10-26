@@ -1,0 +1,51 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table User {
+  id integer [primary key]
+  username varchar
+  email varchar
+  password varchar
+  created_at timestamp
+}
+
+Table Profile {
+  id integer [primary key]
+  userId integer [ref: - User.id]
+  identity_type varchar
+  identity_number varchar
+  address varchar  
+  created_at timestamp
+}
+
+Table Brand {
+  id integer [primary key]  
+  name varchar  
+  created_at timestamp
+}
+
+Table PhoneType {
+  id integer [primary key]  
+  name varchar  
+  brandId integer
+  price integer
+  stoke integer
+  created_at timestamp
+}
+
+Table Transaction {
+  id integer [primary key]
+  userId integer
+  phoneTypeId integer
+  isPaid boolean
+  promoCode varchar  
+  discount integer
+  amount integer
+  created_at timestamp
+}
+
+Ref: Brand.id < PhoneType.brandId
+
+Ref: Transaction.phoneTypeId < PhoneType.id
+
+Ref: User.id < Transaction.userId
